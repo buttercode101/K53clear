@@ -5,100 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>K53 Clear</title>
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0f1419">
+  <meta name="theme-color" content="#07090c">
   <style>
     :root {
-      --bg: #0b0f14;
-      --surface: #161b22;
-      --surface-2: #1f2630;
-      --text: #f0f3f5;
-      --muted: #8b98a5;
-      --accent: #1d9bf0;
-      --danger: #f4212e;
-      --ok: #00ba7c;
-      --warn: #ffad1f;
-      --radius: 14px;
+      --bg: #07090c;
+      --surface: #11151c;
+      --surface-2: #1a2029;
+      --border: rgba(255,255,255,0.06);
+      --text: #f4f6f8;
+      --muted: #8a95a3;
+      --accent: #3b9eff;
+      --accent-soft: rgba(59,158,255,0.12);
+      --danger: #ff4d5a;
+      --ok: #00d68f;
+      --warn: #ffb020;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      margin: 0;
-      padding: 0;
       min-height: 100dvh;
+      line-height: 1.5;
     }
     header {
-      padding: 20px 16px 8px;
-      max-width: 720px;
+      padding: 28px 20px 12px;
+      max-width: 760px;
       margin: 0 auto;
     }
-    h1 { font-size: 1.75rem; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
-    .sub { color: var(--muted); font-size: 0.95rem; margin: 4px 0 0; }
-    main { max-width: 720px; margin: 0 auto; padding: 8px 16px 40px; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 8px 20px 48px;
+    }
+    .readiness-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 640px) {
+      .readiness-grid { grid-template-columns: repeat(3, 1fr); }
+    }
     .card {
       background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
+      padding: 18px;
+      box-shadow: var(--shadow);
     }
     .label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       color: var(--muted);
-      margin-bottom: 8px;
       font-weight: 600;
+      margin-bottom: 6px;
     }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    @media (min-width: 640px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    .miss { color: var(--danger); font-size: 0.92rem; line-height: 1.4; }
+    .ok-text { color: var(--ok); font-size: 0.95rem; }
+    .actions { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
     button, .opt {
       background: var(--surface-2);
       color: var(--text);
-      border: 1px solid #2a3140;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-weight: 600;
-      width: 100%;
-      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px 16px;
+      font-weight: 550;
+      font-size: 0.98rem;
       cursor: pointer;
       text-align: left;
-      font-size: 1rem;
-      transition: border-color 0.15s, transform 0.1s;
+      transition: all 0.15s ease;
     }
-    button:active, .opt:active { transform: scale(0.98); }
-    button.primary { background: var(--accent); border: 0; color: #fff; text-align: center; }
-    button.ok { background: var(--ok); border: 0; color: #fff; text-align: center; }
-    .opt.correct { border-color: var(--ok); background: rgba(0,186,124,0.12); }
-    .opt.wrong { border-color: var(--danger); background: rgba(244,33,46,0.12); }
-    .miss { color: var(--danger); font-size: 0.95rem; }
-    .ok-text { color: var(--ok); }
-    .progress-bar {
-      height: 6px;
-      background: #2a3140;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 8px;
+    button.primary {
+      background: var(--accent);
+      border: 0;
+      color: #fff;
+      text-align: center;
     }
-    .progress-bar > div { height: 100%; background: var(--accent); width: 0; transition: width 0.3s; }
-    #quiz { display: none; }
+    button.ok {
+      background: var(--ok);
+      border: 0;
+      color: #042;
+      text-align: center;
+    }
+    button:active, .opt:active { transform: scale(0.985); }
+    .opt:hover { border-color: rgba(255,255,255,0.15); }
+    .opt.correct { border-color: var(--ok); background: rgba(0,214,143,0.1); }
+    .opt.wrong { border-color: var(--danger); background: rgba(255,77,90,0.1); }
+    .progress-wrap { height: 4px; background: #222; border-radius: 2px; margin: 10px 0 14px; overflow: hidden; }
+    .progress-wrap > div { height: 100%; background: var(--accent); width: 0; transition: width 0.35s ease; }
+    .question { font-size: 1.15rem; font-weight: 500; line-height: 1.45; margin-bottom: 12px; }
     .explain {
-      margin-top: 12px;
-      padding: 12px;
+      margin-top: 14px;
+      padding: 14px;
       background: var(--surface-2);
-      border-radius: 10px;
-      font-size: 0.95rem;
-      line-height: 1.45;
+      border-radius: 12px;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      border-left: 3px solid var(--accent);
     }
-    .timer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--warn); }
-    pre { background: #000; padding: 12px; border-radius: 10px; overflow: auto; font-size: 0.75rem; }
+    .timer { color: var(--warn); font-variant-numeric: tabular-nums; font-weight: 600; }
+    pre {
+      background: #000;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      overflow: auto;
+      border: 1px solid var(--border);
+    }
     .share-card {
-      background: linear-gradient(135deg, #1a2332, #0f1419);
-      border: 1px solid #2a3140;
-      padding: 16px;
+      background: linear-gradient(160deg, #1a2332 0%, #0c1016 100%);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
+      padding: 18px;
       margin-top: 12px;
+      animation: fade 0.3s ease;
     }
+    @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    #quiz, #results { display: none; }
   </style>
 </head>
 <body>
@@ -108,20 +145,22 @@
   </header>
 
   <main>
-    <div id="readiness" class="grid"></div>
+    <div id="readiness" class="readiness-grid"></div>
 
     <div class="card">
       <div class="label">Study</div>
-      <button class="primary" id="start-quiz">Start due session</button>
-      <button class="primary" id="start-mock">Start timed mock (seed)</button>
-      <button class="ok" id="share">Share progress card</button>
+      <div class="actions">
+        <button class="primary" id="start-quiz">Start due session</button>
+        <button class="primary" id="start-mock">Start timed mock</button>
+        <button class="ok" id="share">Share progress</button>
+      </div>
     </div>
 
     <div id="quiz" class="card"></div>
-    <div id="results" class="card" style="display:none"></div>
+    <div id="results" class="card"></div>
 
     <div class="card">
-      <div class="label">Disagreement log (seed)</div>
+      <div class="label">Disagreement log</div>
       <pre id="log"></pre>
     </div>
   </main>
@@ -131,13 +170,7 @@
     import { wilsonInterval, getReadinessState, shouldShowRange, PASS_LINES } from './src/engine/readiness.js';
     import { recordFamilyAttempt, getUniqueFamilies } from './src/storage/db.js';
 
-    let families = [];
-    let session = [];
-    let idx = 0;
-    let lastMisses = [];
-    let mockMode = false;
-    let mockStart = 0;
-    let mockAnswers = [];
+    let families = [], session = [], idx = 0, lastMisses = [], mockMode = false, mockStart = 0, mockAnswers = [];
 
     async function init() {
       families = await loadFamilies();
@@ -150,26 +183,28 @@
     }
 
     async function renderReadiness() {
-      const signs = await getUniqueFamilies('signs');
-      const rules = await getUniqueFamilies('rules');
-      const controls = await getUniqueFamilies('controls');
-      const container = document.getElementById('readiness');
+      const counts = {
+        signs: await getUniqueFamilies('signs'),
+        rules: await getUniqueFamilies('rules'),
+        controls: await getUniqueFamilies('controls')
+      };
       const sections = [
-        { key: 'Signs', count: signs, pass: PASS_LINES.signs, id: 'signs' },
-        { key: 'Rules', count: rules, pass: PASS_LINES.rules, id: 'rules' },
-        { key: 'Controls', count: controls, pass: PASS_LINES.controls, id: 'controls' }
+        { key: 'Signs', id: 'signs', pass: PASS_LINES.signs },
+        { key: 'Rules', id: 'rules', pass: PASS_LINES.rules },
+        { key: 'Controls', id: 'controls', pass: PASS_LINES.controls }
       ];
-      container.innerHTML = sections.map(s => {
-        const state = getReadinessState(s.id, s.count, 0);
-        let body = `<div class="miss">Not enough data · ${s.count} unique families<br>Specific misses only.</div>`;
-        if (state.state !== 'not-enough-data' && s.count >= 12) {
-          const interval = wilsonInterval(Math.round(s.count * 0.66), Math.max(s.count, 1));
+      document.getElementById('readiness').innerHTML = sections.map(s => {
+        const count = counts[s.id];
+        const state = getReadinessState(s.id, count, 0);
+        let body = `<div class="miss">Not enough data<br>${count} unique families</div>`;
+        if (state.state !== 'not-enough-data' && count >= 12) {
+          const interval = wilsonInterval(Math.round(count * 0.66), Math.max(count, 1));
           const straddles = shouldShowRange(interval, s.pass);
           const low = Math.round(interval.low * 100);
           const high = Math.round(interval.high * 100);
           body = straddles
-            ? `<div class="miss">Range crosses the pass line<br>not enough data to call this<br>${low}–${high}%</div>`
-            : `<div class="ok-text">${Math.round(interval.center * 100)}% (range ${low}–${high}%)<br>${state.label}</div>`;
+            ? `<div class="miss">Range crosses pass line<br>${low}–${high}%</div>`
+            : `<div class="ok-text">${Math.round(interval.center * 100)}%<br><span style="color:var(--muted);font-size:0.8rem">${low}–${high}%</span></div>`;
         }
         return `<div class="card"><div class="label">${s.key}</div>${body}</div>`;
       }).join('');
@@ -177,8 +212,7 @@
 
     function showQuestion() {
       const quiz = document.getElementById('quiz');
-      const results = document.getElementById('results');
-      results.style.display = 'none';
+      document.getElementById('results').style.display = 'none';
       if (idx >= session.length) {
         quiz.style.display = 'none';
         if (mockMode) showMockResults();
@@ -190,24 +224,27 @@
       const progress = Math.round((idx / session.length) * 100);
       quiz.innerHTML = `
         <div class="label">${item.section} · ${idx + 1} / ${session.length} ${mockMode ? '<span class="timer" id="timer"></span>' : ''}</div>
-        <div class="progress-bar"><div style="width:${progress}%"></div></div>
-        <p style="font-size:1.1rem; line-height:1.4; margin:12px 0">${item.variant.question}</p>
+        <div class="progress-wrap"><div style="width:${progress}%"></div></div>
+        <div class="question">${item.variant.question}</div>
         ${item.variant.options.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
         <div id="explain"></div>
       `;
       if (mockMode) startTimer();
       quiz.querySelectorAll('.opt').forEach(btn => {
         btn.onclick = async () => {
-          const chosen = Number(btn.dataset.i);
+          const chosen = +btn.dataset.i;
           const correct = chosen === item.variant.answerIndex;
           btn.classList.add(correct ? 'correct' : 'wrong');
           quiz.querySelectorAll('.opt').forEach(b => b.disabled = true);
           if (!correct) lastMisses.push(item.familyId);
           await recordFamilyAttempt(item.familyId, item.section, correct);
           if (mockMode) mockAnswers.push({ section: item.section, correct });
-          const explain = document.getElementById('explain');
-          explain.innerHTML = `<div class="explain">${correct ? 'Correct.' : 'Incorrect.'} ${item.variant.commonErrors?.[0]?.reason || ''}<br><br><strong>Rule:</strong> ${item.rule || 'See source.'}</div>`;
-          setTimeout(() => { idx++; showQuestion(); }, 900);
+          document.getElementById('explain').innerHTML = `
+            <div class="explain">
+              ${correct ? 'Correct' : 'Incorrect'}. ${item.variant.commonErrors?.[0]?.reason || ''}
+              <br><br><strong>Rule</strong><br>${item.rule || 'See source locator.'}
+            </div>`;
+          setTimeout(() => { idx++; showQuestion(); }, 1100);
         };
       });
     }
@@ -215,25 +252,23 @@
     function startTimer() {
       const el = document.getElementById('timer');
       if (!el) return;
-      const update = () => {
+      const tick = () => {
         const left = Math.max(0, 20 * 60 - Math.floor((Date.now() - mockStart) / 1000));
-        const m = Math.floor(left / 60);
-        const s = left % 60;
-        el.textContent = ` · ${m}:${s.toString().padStart(2,'0')}`;
-        if (left > 0 && mockMode) setTimeout(update, 1000);
+        el.textContent = ` · ${Math.floor(left/60)}:${(left%60).toString().padStart(2,'0')}`;
+        if (left > 0 && mockMode) setTimeout(tick, 1000);
       };
-      update();
+      tick();
     }
 
     function showMockResults() {
-      const results = document.getElementById('results');
-      const by = { rules: { c:0, t:0 }, signs:{c:0,t:0}, controls:{c:0,t:0} };
+      const el = document.getElementById('results');
+      const by = { rules:{c:0,t:0}, signs:{c:0,t:0}, controls:{c:0,t:0} };
       mockAnswers.forEach(a => { if (by[a.section]) { by[a.section].t++; if (a.correct) by[a.section].c++; } });
-      results.style.display = 'block';
-      results.innerHTML = `
-        <div class="label">Mock results (seed)</div>
-        <p>Rules: ${by.rules.c}/${by.rules.t} · Signs: ${by.signs.c}/${by.signs.t} · Controls: ${by.controls.c}/${by.controls.t}</p>
-        <p class="miss">This is a seed mock. Readiness labels remain governed by unique-family thresholds, not a single session.</p>
+      el.style.display = 'block';
+      el.innerHTML = `
+        <div class="label">Mock results</div>
+        <p style="margin:8px 0">Rules ${by.rules.c}/${by.rules.t} · Signs ${by.signs.c}/${by.signs.t} · Controls ${by.controls.c}/${by.controls.t}</p>
+        <p class="miss" style="font-size:0.9rem">Seed mock. Readiness remains governed by unique-family thresholds.</p>
       `;
       mockMode = false;
       renderReadiness();
@@ -242,29 +277,24 @@
     document.getElementById('start-quiz').onclick = () => {
       mockMode = false;
       session = families.map(f => ({ ...f, variant: pickVariant(f) }));
-      idx = 0;
-      lastMisses = [];
+      idx = 0; lastMisses = [];
       showQuestion();
     };
-
     document.getElementById('start-mock').onclick = () => {
-      mockMode = true;
-      mockStart = Date.now();
-      mockAnswers = [];
+      mockMode = true; mockStart = Date.now(); mockAnswers = [];
       session = families.map(f => ({ ...f, variant: pickVariant(f) }));
       idx = 0;
       showQuestion();
     };
-
     document.getElementById('share').onclick = () => {
       const text = lastMisses.length
-        ? `Before: missed ${[...new Set(lastMisses)].slice(0,2).join(', ')}\nAfter this session: reviewed the rules\nNext: continue due families`
-        : 'Session complete. No misses this time.';
+        ? `Before: missed ${[...new Set(lastMisses)].slice(0,2).join(', ')}\nAfter session: reviewed the rules\nNext: continue due families`
+        : 'Session complete. No misses.';
       const card = document.createElement('div');
       card.className = 'share-card';
-      card.innerHTML = `<div class="label">Share card</div><pre style="white-space:pre-wrap">${text}</pre>`;
+      card.innerHTML = `<div class="label">Progress</div><pre style="white-space:pre-wrap;background:transparent;border:0;padding:0;margin-top:6px">${text}</pre>`;
       document.querySelector('main').appendChild(card);
-      setTimeout(() => card.remove(), 8000);
+      setTimeout(() => card.remove(), 9000);
     };
 
     init();
