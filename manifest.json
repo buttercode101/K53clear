@@ -1,0 +1,8 @@
+{
+  "name": "K53 Clear",
+  "short_name": "K53 Clear",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1419",
+  "theme_color": "#1d9bf0"
+}
