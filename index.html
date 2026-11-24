@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K53 Clear</title>
+  <style>
+    :root { --bg:#0f1419; --surface:#1a1f26; --text:#e7e9ea; --muted:#8b98a5; --accent:#1d9bf0; --danger:#f4212e; --ok:#00ba7c; }
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 16px; max-width: 680px; margin-inline: auto; }
+    h1 { font-size: 1.6rem; margin: 0 0 4px; }
+    .sub { color: var(--muted); margin-bottom: 20px; }
+    .card { background: var(--surface); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+    .miss { color: var(--danger); margin-top: 6px; }
+    button { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 12px; font-weight: 600; width: 100%; margin-top: 8px; cursor: pointer; }
+    .share { background: var(--ok); }
+    pre { background: #000; padding: 12px; border-radius: 8px; overflow: auto; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <h1>K53 Clear</h1>
+  <p class="sub">Diagnostic, never predictive. No score until the data can support it.</p>
+
+  <div id="readiness"></div>
+
+  <div class="card">
+    <div class="label">Actions</div>
+    <button id="session">Simulate 15 unique Signs families</button>
+    <button id="mock">Simulate one full mock (28/28/8)</button>
+    <button id="share" class="share">Generate share card (delta)</button>
+  </div>
+
+  <div class="card">
+    <div class="label">Disagreement log (seed)</div>
+    <pre id="log"></pre>
+  </div>
+
+  <script type="module">
+    import { wilsonInterval, getReadinessState, shouldShowRange, PASS_LINES } from './src/engine/readiness.js';
+    import { buildMock, scoreMock } from './src/engine/mock.js';
+
+    let signs = 0, rules = 0, controls = 0, mocks = 0;
+    let lastMisses = ['Stop vs Yield'];
+
+    async function loadLog() {
+      const res = await fetch('./data/logs/disagreement-v1.json');
+      const data = await res.json();
+      document.getElementById('log').textContent = JSON.stringify(data, null, 2);
+    }
+
+    function render() {
+      const container = document.getElementById('readiness');
+      const sections = [
+        { key: 'signs', count: signs, pass: PASS_LINES.signs },
+        { key: 'rules', count: rules, pass: PASS_LINES.rules },
+        { key: 'controls', count: controls, pass: PASS_LINES.controls }
+      ];
+      container.innerHTML = sections.map(s => {
+        const state = getReadinessState(s.key, s.count, mocks);
+        let body = '<div class="miss">Not enough data — specific misses only.</div>';
+        if (state.state !== 'not-enough-data') {
+          const interval = wilsonInterval(Math.round(s.count * 0.68), s.count);
+          const straddles = shouldShowRange(interval, s.pass);
+          const low = Math.round(interval.low * 100);
+          const high = Math.round(interval.high * 100);
+          body = straddles
+            ? `<div class="miss">Range crosses the pass line — not enough data to call this<br>${low}–${high}%</div>`
+            : `<div>${Math.round(interval.center*100)}% (range ${low}–${high}%) — ${state.label}</div>`;
+        }
+        return `<div class="card"><div class="label">${s.key}</div>${body}</div>`;
+      }).join('');
+    }
+
+    document.getElementById('session').onclick = () => { signs += 15; lastMisses = ['Stop vs Yield', 'No overtaking line']; render(); };
+    document.getElementById('mock').onclick = () => { mocks += 1; signs += 28; rules += 28; controls += 8; render(); };
+    document.getElementById('share').onclick = () => {
+      const text = `Before: Mixed up ${lastMisses[0]}\nAfter 2 sessions: cleared the pair\nNext: Regulatory vs warning signs`;
+      alert(text);
+    };
+
+    loadLog();
+    render();
+  </script>
+</body>
+</html>
