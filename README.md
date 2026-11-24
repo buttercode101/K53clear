@@ -11,30 +11,29 @@ Speed is diagnostic, never predictive. No score until the data can support it.
 4. **Reviewer disagreement log** — public, versioned. Payment for problems found, not approvals. Audit trigger on 100% approval.
 5. **“I sat” kill switch** — after 500 reported outcomes, if “ready” users do not pass at a meaningfully higher rate than “not enough data” users, remove readiness labels and publish the result.
 
-## Current status
+## Current status — end-to-end working
 
-This repository contains the technical system that enforces the locked rules:
-
-- Readiness engine with Wilson intervals and threshold states
-- Unique-family counting via IndexedDB
-- Mock engine that draws from families and scores by section minima
-- Swappable scheduler interface (SM-2 default)
+- Real quiz sessions loaded from seed rule families
+- Unique-family tracking in IndexedDB (repeats do not inflate sample)
+- Readiness display that updates after sessions and refuses predictive scores when data is insufficient
+- Wilson interval logic with pass-line straddling check
+- Mock engine and section scoring against published minima
+- Swappable scheduler
 - Controls coverage checker
-- Seed content and seed disagreement log
-- UI that refuses to show a predictive score when data is insufficient
+- Service worker for offline after first load
+- Share delta card
+- Seed disagreement log
 
-**Content is seed only.** Independently reviewed rule families, fluent language review, and a real reviewer panel are not included. Those are the product; this is the enforcement layer.
+**Content is seed only (5 families).** Independently reviewed rule families, fluent language review, and a real reviewer panel are not included. The technical flow is complete and enforces the locked rules.
 
 ## Run locally
 
 ```bash
+git clone https://github.com/buttercode101/K53clear.git
+cd K53clear
 python3 -m http.server 3000
 ```
 
 Open http://localhost:3000
 
-## Next
-
-Author verified rule families under the schema in `data/families/`.  
-Wire the disagreement log.  
-Add the 64Q mock that draws from families with freshness constraints.
+Answer questions. Unique family counts update. Readiness stays in “not enough data” until thresholds are met.
