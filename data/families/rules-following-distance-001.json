@@ -1,0 +1,28 @@
+{
+  "familyId": "rules-following-distance-001",
+  "section": "rules",
+  "rule": "Minimum following distance on a dry road at 100 km/h is 3 seconds",
+  "source": { "manual": "NaTIS Rules of the Road", "locator": "Following distance" },
+  "trap": "Using 2-second rule in all conditions or ignoring speed",
+  "confusableWith": [],
+  "variants": [
+    {
+      "variantId": "rules-following-distance-001-a",
+      "changeType": "scenario",
+      "question": "You are travelling at 100 km/h on a dry highway. What is the minimum following distance?",
+      "options": ["1 second", "2 seconds", "3 seconds", "4 seconds"],
+      "answerIndex": 2,
+      "commonErrors": [{ "index": 1, "reason": "Applies shorter urban rule" }]
+    },
+    {
+      "variantId": "rules-following-distance-001-b",
+      "changeType": "direction",
+      "question": "Which of the following is prohibited when following another vehicle at 100 km/h on a dry road?",
+      "options": ["Leaving 3 seconds", "Leaving less than 3 seconds", "Increasing distance in rain", "Checking mirrors"],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 0, "reason": "Confuses required with prohibited" }]
+    }
+  ],
+  "reviewStatus": "source-checked",
+  "fingerprint": "seed-002"
+}

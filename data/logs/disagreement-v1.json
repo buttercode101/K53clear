@@ -1,0 +1,10 @@
+[
+  {
+    "familyId": "signs-stop-vs-yield-001",
+    "reviewerId": "rev-seed",
+    "outcome": "Changed",
+    "issueFound": "Variant B trap was ambiguous",
+    "changeMade": "Rewrote distractor to remove second correct reading",
+    "date": "2026-11-24"
+  }
+]

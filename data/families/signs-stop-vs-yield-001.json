@@ -1,0 +1,38 @@
+{
+  "familyId": "signs-stop-vs-yield-001",
+  "section": "signs",
+  "rule": "A Stop sign requires a complete stop. A Yield sign requires you to give way if necessary.",
+  "source": { "manual": "NaTIS / SADC-RTSM", "locator": "Regulatory signs R1 / R2" },
+  "trap": "Treating Yield as a full stop, or treating Stop as Yield when the road looks clear",
+  "confusableWith": ["signs-yield-001"],
+  "variants": [
+    {
+      "variantId": "signs-stop-vs-yield-001-a",
+      "changeType": "scenario",
+      "question": "You approach an unsigned intersection with a Stop sign on your side. The cross road looks empty. What must you do?",
+      "options": [
+        "Slow down and proceed if clear",
+        "Come to a complete stop, then proceed when safe",
+        "Yield only if another vehicle is visible",
+        "Stop only if traffic is approaching"
+      ],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 0, "reason": "Confuses Stop with Yield" }]
+    },
+    {
+      "variantId": "signs-stop-vs-yield-001-b",
+      "changeType": "trap",
+      "question": "At a Yield sign, the intersecting road has priority. What is required?",
+      "options": [
+        "Full stop every time",
+        "Give way if necessary, then proceed",
+        "Stop only at night",
+        "Ignore if no vehicles are visible"
+      ],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 0, "reason": "Applies Stop rule to Yield" }]
+    }
+  ],
+  "reviewStatus": "source-checked",
+  "fingerprint": "seed-001"
+}

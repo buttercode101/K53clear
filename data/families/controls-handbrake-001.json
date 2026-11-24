@@ -1,0 +1,20 @@
+{
+  "familyId": "controls-handbrake-001",
+  "section": "controls",
+  "rule": "The parking brake must hold the vehicle stationary on a slope",
+  "source": { "manual": "NaTIS Vehicle Controls", "locator": "Parking brake" },
+  "trap": "Relying only on the footbrake or gear",
+  "confusableWith": [],
+  "variants": [
+    {
+      "variantId": "controls-handbrake-001-a",
+      "changeType": "scenario",
+      "question": "You stop on a steep incline. What must the parking brake do?",
+      "options": ["Hold the vehicle without footbrake", "Only assist the footbrake", "Work only in reverse", "Be optional if in gear"],
+      "answerIndex": 0,
+      "commonErrors": [{ "index": 1, "reason": "Treats parking brake as secondary" }]
+    }
+  ],
+  "reviewStatus": "source-checked",
+  "fingerprint": "seed-003"
+}
