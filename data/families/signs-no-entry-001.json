@@ -1,0 +1,28 @@
+{
+  "familyId": "signs-no-entry-001",
+  "section": "signs",
+  "rule": "No Entry sign prohibits entry for all vehicles",
+  "source": { "manual": "NaTIS / SADC-RTSM", "locator": "Regulatory signs" },
+  "trap": "Confusing with No Stopping or No Parking",
+  "confusableWith": [],
+  "variants": [
+    {
+      "variantId": "signs-no-entry-001-a",
+      "changeType": "scenario",
+      "question": "You see a circular red sign with a white horizontal bar. What does it mean?",
+      "options": ["No parking", "No entry for all vehicles", "No stopping", "Yield"],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 0, "reason": "Confuses with parking restriction" }]
+    },
+    {
+      "variantId": "signs-no-entry-001-b",
+      "changeType": "direction",
+      "question": "Which action is prohibited by a No Entry sign?",
+      "options": ["Parking briefly", "Entering the road", "Stopping to drop a passenger", "Turning left"],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 2, "reason": "Treats it as a stopping rule" }]
+    }
+  ],
+  "reviewStatus": "source-checked",
+  "fingerprint": "seed-004"
+}

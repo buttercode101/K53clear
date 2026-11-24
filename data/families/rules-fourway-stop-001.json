@@ -1,0 +1,20 @@
+{
+  "familyId": "rules-fourway-stop-001",
+  "section": "rules",
+  "rule": "At a four-way stop, the first vehicle to stop has priority; if simultaneous, the vehicle on the right has priority",
+  "source": { "manual": "NaTIS Rules of the Road", "locator": "Right of way" },
+  "trap": "Assuming the vehicle going straight always has priority",
+  "confusableWith": [],
+  "variants": [
+    {
+      "variantId": "rules-fourway-stop-001-a",
+      "changeType": "scenario",
+      "question": "Two vehicles arrive at a four-way stop at the same time from opposite directions. Who proceeds first?",
+      "options": ["The vehicle turning right", "The vehicle going straight", "They proceed together", "The heavier vehicle"],
+      "answerIndex": 1,
+      "commonErrors": [{ "index": 0, "reason": "Applies turning priority incorrectly" }]
+    }
+  ],
+  "reviewStatus": "source-checked",
+  "fingerprint": "seed-005"
+}
